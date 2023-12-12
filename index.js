@@ -61,11 +61,18 @@ inquirer
                     name: "dept_name",
                     message: "What would you like to call it?",
                 }
-            ]) .then (answers => {
-                db.query("insert into department (dept_name) values (?)",[answers.dept_name],(err, result) =>{
-                    console.log("department created")
-                    mainMenu()
-                })
+            ])  .then(answers => {
+                const sql = "INSERT INTO department (dept_name) VALUES (?)";
+                const values = [answers.dept_name];
+        
+                db.query(sql, values, (err, result) => {
+                    if (err) {
+                        console.error("Error adding department:", err);
+                    } else {
+                        console.log("department created");
+                        mainMenu();
+                    }
+                });
             })
             break;
 
@@ -74,14 +81,31 @@ inquirer
             inquirer.prompt([
                 {
                     type: "input",
-                    name: "role_name",
+                    name: "title",
                     message: "What would you like to call it?",
+                },
+                {
+                    type: "input",
+                    name: "salary",
+                    message: "What would you like to pay it?",
+                },
+                {
+                    type: "input",
+                    name: "department_id",
+                    message: "What department does it belong to?",
                 }
-            ]) .then (answers => {
-                db.query("insert into roles (role_name) values (?)",[answers.role_name],(err, result) =>{
-                    console.log("role created")
-                    mainMenu()
-                })
+            ]) .then(answers => {
+                const sql = "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)";
+                const values = [answers.title, answers.salary, answers.department_id];
+        
+                db.query(sql, values, (err, result) => {
+                    if (err) {
+                        console.error("Error adding role:", err);
+                    } else {
+                        console.log("Role created");
+                        mainMenu();
+                    }
+                });
             })
             break;
 
@@ -97,14 +121,24 @@ inquirer
                     type: "input",
                     name: "last_name",
                     message: "What is the employee last name?",
+                },
+                {
+                    type: "input",
+                    name: "role_id",
+                    message: "What is the employee role id (1-15)?",
                 }
-            ]) .then (answers => {
-                db.query("insert into employees (first_name) values (?)",[answers.first_name],(err, result) =>{
-                })
-                db.query("insert into employees (last_name) values (?)",[answers.last_name],(err, result) =>{
-                    console.log("employee created")
-                    mainMenu()
-                })
+            ]) .then(answers => {
+                const sql = "INSERT INTO employees (first_name, last_name, role_id) VALUES (?, ?, ?)";
+                const values = [answers.first_name, answers.last_name, answers.role_id];
+        
+                db.query(sql, values, (err, result) => {
+                    if (err) {
+                        console.error("Error adding employee:", err);
+                    } else {
+                        console.log("Employee created");
+                        mainMenu();
+                    }
+                });
             })
             break;
 
@@ -113,6 +147,7 @@ inquirer
             break;
         default :
             // exit
+            process.exit()
 
     }
 })
