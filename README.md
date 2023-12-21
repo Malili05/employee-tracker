@@ -4,12 +4,12 @@
 a node.js run application to view an employee database.
 
 # Installation
-in CLI:
---npm i
-open Mysql and login
---source schema.sql
---source seed.sql
-run node index
+in CLI:  
+--npm i  
+open Mysql and login  
+--source schema.sql  
+--source seed.sql  
+run node index  
 
 # License
 MIT 
